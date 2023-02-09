@@ -87,7 +87,6 @@ const getAllProperties = (options, limit = 10) => {
       console.log(err.message);
     });   
 };
-
 exports.getAllProperties = getAllProperties;
 
 
@@ -103,6 +102,3 @@ const addProperty = function(property) {
   return Promise.resolve(property);
 };
 exports.addProperty = addProperty;
-
-
-hello
