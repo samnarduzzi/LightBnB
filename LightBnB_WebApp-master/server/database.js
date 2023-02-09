@@ -87,6 +87,7 @@ const getAllProperties = (options, limit = 10) => {
       console.log(err.message);
     });   
 };
+
 exports.getAllProperties = getAllProperties;
 
 
