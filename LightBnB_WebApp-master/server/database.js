@@ -18,16 +18,17 @@ const users = require('./json/users.json');
  * @return {Promise<{}>} A promise to the user.
  */
 const getUserWithEmail = function(email) {
-  let user;
-  for (const userId in users) {
-    user = users[userId];
-    if (user.email.toLowerCase() === email.toLowerCase()) {
-      break;
-    } else {
-      user = null;
-    }
-  }
-  return Promise.resolve(user);
+  return pool
+    .query(
+      `SELECT * FROM users 
+      WHERE LOWER(email) = $1`,
+      [email.toLowerCase()])
+    .then((user) => {
+      return user.rows[0];
+    })
+    .catch((err) => {
+      console.log(err.message);
+    });
 };
 exports.getUserWithEmail = getUserWithEmail;
 
@@ -85,7 +86,7 @@ const getAllProperties = (options, limit = 10) => {
     })
     .catch((err) => {
       console.log(err.message);
-    });   
+    });
 };
 exports.getAllProperties = getAllProperties;
 
