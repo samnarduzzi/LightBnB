@@ -144,7 +144,7 @@ const getAllProperties = (options, limit = 10) => {
     queryString += `AND cost_per_night/100 <= $${queryParams.length} `;
   }
 
-  queryString += ` GROUP BY properties.id `
+  queryString += ` GROUP BY properties.id `;
 
   if (options.minimum_rating) {
     queryParams.push(options.minimum_rating);
@@ -167,9 +167,7 @@ exports.getAllProperties = getAllProperties;
  * @return {Promise<{}>} A promise to the property.
  */
 const addProperty = function(property) {
-  const propertyId = Object.keys(properties).length + 1;
-  property.id = propertyId;
-  properties[propertyId] = property;
-  return Promise.resolve(property);
+  property.cost_per_night *= 100;
+  return insertObjToDB('properties', property);
 };
 exports.addProperty = addProperty;
